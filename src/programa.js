@@ -190,6 +190,8 @@ function mostrarProyectos(proyectos) {
     return;
   }
 
+  /*
+  ---CÓDIGO ORIGINAL QUE REEMPLACÉ POR EL BLOQUE QUE SIGUE---
   proyectos.forEach((proyecto) => {
     const tarjeta = crearTarjetaProyecto({
       titulo: proyecto[TABLA_PROYECTOS.campos.titulo],
@@ -207,6 +209,38 @@ function mostrarProyectos(proyectos) {
     });
     contenedorProyectos.appendChild(tarjeta);
   });
+  */
+
+  //---CÓDIGO QUE PEGUÉ DESDE CHATGPT---
+  proyectos.forEach((proyecto) => {
+  let imagen = proyecto[TABLA_PROYECTOS.campos.imagen];
+
+  // Normalizar imagen si es objeto o array (campo tipo File)
+  if (Array.isArray(imagen)) {
+    imagen = imagen[0]?.url;
+  } else if (imagen && typeof imagen === 'object') {
+    imagen = imagen.url;
+  }
+
+  const tarjeta = crearTarjetaProyecto({
+    titulo: proyecto[TABLA_PROYECTOS.campos.titulo],
+    descripcion: proyecto[TABLA_PROYECTOS.campos.descripcion],
+    imagen: imagen,
+    enlace: proyecto[TABLA_PROYECTOS.campos.enlace],
+    registro: proyecto,
+    campos: camposTablaMemo,
+    camposBase: [
+      TABLA_PROYECTOS.campos.titulo,
+      TABLA_PROYECTOS.campos.descripcion,
+      TABLA_PROYECTOS.campos.imagen,
+      TABLA_PROYECTOS.campos.enlace,
+    ],
+  });
+
+  contenedorProyectos.appendChild(tarjeta);
+});
+//---FIN DE CÓDIGO PEGADO DESDE CHATGPT---
+
 
   actualizarContadorResultados(proyectos.length);
 }
