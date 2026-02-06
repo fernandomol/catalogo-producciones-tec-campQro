@@ -85,8 +85,8 @@ export const TABLA_PROYECTOS = {
   campos: {
     titulo: 'Título de tu proyecto', // Campo que contiene el título del proyecto
     descripcion: 'Sinopsis / Logline', // Campo que contiene la descripción
-    imagen: 'Imagen', // Campo que contiene la URL de la imagen
-    enlace: 'Cartelonline', // Campo que contiene un enlace externo
+    imagen: 'Cartelonline', // Campo que contiene la URL de la imagen
+    enlace: 'enlace', // Campo que contiene un enlace externo
     fecha: 'Fecha', // Campo que contiene la fecha
   },
 };
