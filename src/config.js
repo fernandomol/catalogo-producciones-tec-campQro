@@ -83,10 +83,10 @@ export const TABLA_PROYECTOS = {
   // Los nombres de los campos en tu tabla
   // (deben coincidir exactamente con los nombres en Baserow)
   campos: {
-    titulo: 'Título de tu proyecto', // Campo que contiene el título del proyecto
-    descripcion: 'Sinopsis / Logline', // Campo que contiene la descripción
+    titulo: 'Título', // Campo que contiene el título del proyecto
+    descripcion: 'Descripción', // Campo que contiene la descripción
     imagen: 'Imagen', // Campo que contiene la URL de la imagen
-    enlace: 'Cartelonline', // Campo que contiene un enlace externo
+    enlace: 'Enlace', // Campo que contiene un enlace externo
     fecha: 'Fecha', // Campo que contiene la fecha
   },
 };
