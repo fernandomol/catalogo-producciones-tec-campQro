@@ -160,7 +160,7 @@ export const SITIO = {
 
 1. Ve a tu repositorio en GitHub.com
 2. Ve a **Settings** → **Pages**
-3. En "Source" selecciona **"Deploy from a branch"**
+3. En "Source" selecciona **"GitHub Actions"**
 4. Rama: **main**
 5. Carpeta: **/root** ← IMPORTANTE
 6. Haz clic en **"Save"**

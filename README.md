@@ -119,49 +119,23 @@ Visita `http://localhost:3000` en tu navegador. Deberías ver tu contenido de Ba
 
 ### 6️⃣ Publicar en GitHub Pages
 
-#### Opción A: Usando GitHub Desktop (Recomendado para principiantes)
+**¡Lo mejor es que ya está todo listo!** El workflow de GitHub Actions se encarga automáticamente del build y publicación.
 
-1. Abre [GitHub.com](https://github.com) y crea un nuevo repositorio
-2. Clona el repositorio en tu computadora con GitHub Desktop
-3. Copia los archivos de esta plantilla en la carpeta del repositorio
-4. En la terminal, dentro de la carpeta del proyecto:
-   ```bash
-   npm run build
-   ```
-5. Abre GitHub Desktop, verás los cambios
-6. Escribe un mensaje (ej: "Primera publicación") y haz clic en "Commit"
-7. Haz clic en "Publish branch"
-8. En GitHub.com, ve a **Settings** → **Pages** → Selecciona **Deploy from a branch** → Rama **main** → Carpeta **/(root)**
-9. ¡Listo! En unos minutos tu sitio estará en línea
+Solo necesitas:
 
-#### Opción B: Usar Actions de GitHub (Automático)
+1. Abre [GitHub.com](https://github.com) y crea un nuevo repositorio público
+2. Copia los archivos de esta plantilla en tu repositorio
+3. Ve a **Settings** → **Pages**
+4. En **Source** selecciona **GitHub Actions**
+5. Haz push de tus cambios a la rama `main`
 
-Crea un archivo `.github/workflows/build-and-deploy.yml`:
+¡Eso es todo! El workflow automáticamente:
 
-```yaml
-name: Build and Deploy
+- Instala dependencias
+- Compila el código
+- Publica tu sitio en GitHub Pages
 
-on:
-  push:
-    branches: [main]
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm install
-      - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-```
-
-Así, cada vez que hagas push, el sitio se actualiza automáticamente.
+Cada vez que hagas push a `main`, el sitio se actualiza automáticamente en unos 2-3 minutos. No necesitas hacer `npm run build` localmente.
 
 ## Estructura de Archivos
 

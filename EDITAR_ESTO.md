@@ -149,13 +149,13 @@ Una vez funcione todo:
 
 ## 📞 SI ALGO FALLA
 
-| Error                      | Solución                             |
-| -------------------------- | ------------------------------------ |
-| "Token inválido"           | Genera uno nuevo en Baserow          |
-| "Tabla no encontrada"      | Verifica TABLE_ID en URL             |
-| "Campos vacíos"            | Los nombres no coinciden exactamente |
-| "No carga nada"            | Espera 5 seg, refresca Ctrl+F5       |
-| No aparece en GitHub Pages | Hiciste `npm run build`?             |
+| Error                      | Solución                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| "Token inválido"           | Genera uno nuevo en Baserow                                                     |
+| "Tabla no encontrada"      | Verifica TABLE_ID en URL                                                        |
+| "Campos vacíos"            | Los nombres no coinciden exactamente                                            |
+| "No carga nada"            | Espera 5 seg, refresca Ctrl+F5                                                  |
+| No aparece en GitHub Pages | ¿El workflow de GitHub Actions completó exitosamente? (verifica en Actions tab) |
 
 ---
 

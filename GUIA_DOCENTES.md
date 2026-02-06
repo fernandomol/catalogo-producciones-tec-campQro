@@ -66,7 +66,8 @@ Esta plantilla está diseñada para que estudiantes creen sitios web dinámicos 
    - Configurar Pages en GitHub
    - Entender base path y subrutas
 3. **Día 3-4**: Deployment
-   - Hacer `npm run build`
+   - Explicar GitHub Actions (opcional)
+   - Push a repositorio (GitHub Actions hace el resto)
    - Subir cambios a GitHub
    - Verificar que el sitio funciona
 4. **Día 5**: Iteración
@@ -102,7 +103,6 @@ Esta plantilla está diseñada para que estudiantes creen sitios web dinámicos 
 
 #### Nivel 3: Avanzado
 
-- [ ] Crear formulario que guarda en Baserow
 - [ ] Implementar paginación
 - [ ] Agregar filtros complejos
 - [ ] Crear galería interactiva
@@ -132,7 +132,7 @@ Esta plantilla está diseñada para que estudiantes creen sitios web dinámicos 
 
 - [ ] Características adicionales (10%)
 
-### 🔧 Troubleshooting en clase
+### 🔧 Resolver problemas comunes en clase
 
 **Problema: "Mi token no funciona"**
 
@@ -147,7 +147,7 @@ Esta plantilla está diseñada para que estudiantes creen sitios web dinámicos 
 
 **Problema: "Mi sitio no está en GitHub Pages"**
 
-- Solución: Verificar que hizo `npm run build`
+- Solución: Verificar que el push llegó a la rama main y que Actions terminó correctamente
 - Comprobar que está en rama `main`
 - Esperar 3-5 minutos y refrescar
 
@@ -244,5 +244,3 @@ Si tienes dudas como docente:
 ---
 
 **¡Espero que esta plantilla sea útil para tu clase!** 🎓
-
-Si necesitas adaptaciones o tienes sugerencias, comunícate.
