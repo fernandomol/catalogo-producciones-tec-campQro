@@ -10,11 +10,11 @@ import sitemap from 'vite-plugin-sitemap';
  */
 
 // ⭐ URL DEL SITIO - CAMBIAR AQUÍ
-const urlSitio = 'https://enflujo.github.io/enflujo-documento-al-dato';
+const urlSitio = 'https://fernandomol.github.io/catalogo-producciones-tec-campQro/';
 
 export default defineConfig({
   // IMPORTANTE: Descomenta y ajusta según donde publiques en GitHub Pages
-  base: '/enflujo-documento-al-dato/', // Para proyecto en repositorio
+  base: '/catalogo-producciones-tec-campQro/', // Para proyecto en repositorio
 
   define: {
     __URL_SITIO__: JSON.stringify(urlSitio),
