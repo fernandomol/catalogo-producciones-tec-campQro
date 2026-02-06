@@ -9,15 +9,16 @@ import sitemap from 'vite-plugin-sitemap';
  * - Si es en un repositorio: base: '/nombre-repositorio/'
  */
 
-// Detectar el entorno
-const isProd = process.env.NODE_ENV === 'production';
-
-// URL del sitio (cambiar en config.js)
-const hostname = 'https://ejemplo.com';
+// ⭐ URL DEL SITIO - CAMBIAR AQUÍ
+const urlSitio = 'https://enflujo.github.io/enflujo-documento-al-dato';
 
 export default defineConfig({
   // IMPORTANTE: Descomenta y ajusta según donde publiques en GitHub Pages
-  // base: '/mi-proyecto/', // Para proyecto en repositorio
+  base: '/enflujo-documento-al-dato/', // Para proyecto en repositorio
+
+  define: {
+    __URL_SITIO__: JSON.stringify(urlSitio),
+  },
 
   server: {
     port: 3000,
@@ -40,7 +41,7 @@ export default defineConfig({
   },
   plugins: [
     sitemap({
-      hostname,
+      hostname: urlSitio,
       outDir: 'dist',
       robots: [
         {

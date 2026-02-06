@@ -4,7 +4,7 @@ import { obtenerCamposTabla, obtenerRegistrosTabla } from './baserow.js';
 import { crearSeccionCMS, crearTarjetaProyecto } from './componentes.js';
 
 let cargandoProyectos = false;
-let camposTablaCache = null;
+let camposTablaMemo = null;
 let contenedorProyectos = null;
 
 // =====================================================
@@ -24,7 +24,7 @@ inicializarSitio();
  * Actualiza los metadatos del sitio (título, descripción, etc.)
  * Esto es importante para SEO y redes sociales
  */
-function actualizarMetadatos(datosSitio) {
+function actualizarMetadatosDelSitio(datosSitio) {
   const datos = datosSitio || SITIO;
   // Actualizar el título en la pestaña del navegador
   document.title = datos.titulo;
@@ -84,8 +84,8 @@ async function cargarYMostrarProyectos() {
 
   try {
     const proyectos = AVANZADO.modoEstatico ? await obtenerProyectosEstaticos() : await obtenerProyectosConCache();
-    if (!AVANZADO.modoEstatico && !camposTablaCache) {
-      camposTablaCache = await obtenerCamposTabla(TABLA_PROYECTOS.id);
+    if (!AVANZADO.modoEstatico && !camposTablaMemo) {
+      camposTablaMemo = await obtenerCamposTabla(TABLA_PROYECTOS.id);
     }
 
     // Remover el mensaje de carga
@@ -112,7 +112,7 @@ async function cargarYMostrarProyectos() {
         imagen: proyecto[TABLA_PROYECTOS.campos.imagen],
         enlace: proyecto[TABLA_PROYECTOS.campos.enlace],
         registro: proyecto,
-        campos: camposTablaCache,
+        campos: camposTablaMemo,
         camposBase: [
           TABLA_PROYECTOS.campos.titulo,
           TABLA_PROYECTOS.campos.descripcion,
@@ -147,7 +147,7 @@ async function cargarYMostrarProyectos() {
 async function inicializarSitio() {
   const datosSitio = await cargarDatosSitio();
   construirSecciones(datosSitio);
-  actualizarMetadatos(datosSitio);
+  actualizarMetadatosDelSitio(datosSitio);
   cargarYMostrarProyectos();
 }
 

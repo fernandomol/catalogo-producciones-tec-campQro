@@ -7,12 +7,12 @@
 
 import { marked } from 'marked';
 
-function renderMarkdown(texto) {
+function renderizarMarkdown(texto) {
   if (!texto) return '';
   return marked.parse(String(texto), { breaks: true });
 }
 
-function escapeHtml(texto) {
+function escaparHtml(texto) {
   return String(texto)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -40,7 +40,7 @@ function renderizarArchivo(archivo) {
   if (!archivo) return '';
   const url = archivo.url || archivo.file || archivo.download_url || '';
   const nombre = archivo.name || archivo.original_name || 'Archivo';
-  if (!url) return escapeHtml(nombre);
+  if (!url) return escaparHtml(nombre);
   const esImagen = archivo.is_image || archivo.image || false;
   if (esImagen) {
     return `<img src="${url}" alt="${escapeHtml(nombre)}" class="campo-imagen">`;
@@ -53,15 +53,15 @@ function renderizarValorCampo(valor, campo) {
 
   switch (campo.type) {
     case 'long_text':
-      return renderMarkdown(valor);
+      return renderizarMarkdown(valor);
     case 'text':
-      return escapeHtml(valor);
+      return escaparHtml(valor);
     case 'url':
-      return `<a href="${escapeHtml(valor)}" target="_blank" rel="noreferrer">${escapeHtml(valor)}</a>`;
+      return `<a href="${escaparHtml(valor)}" target="_blank" rel="noreferrer">${escaparHtml(valor)}</a>`;
     case 'email':
-      return `<a href="mailto:${escapeHtml(valor)}">${escapeHtml(valor)}</a>`;
+      return `<a href="mailto:${escaparHtml(valor)}">${escaparHtml(valor)}</a>`;
     case 'phone_number':
-      return `<a href="tel:${escapeHtml(valor)}">${escapeHtml(valor)}</a>`;
+      return `<a href="tel:${escaparHtml(valor)}">${escaparHtml(valor)}</a>`;
     case 'boolean':
       return `<span class="campo-boolean ${valor ? 'activo' : 'inactivo'}">${valor ? 'Sí' : 'No'}</span>`;
     case 'date':
@@ -70,10 +70,10 @@ function renderizarValorCampo(valor, campo) {
     case 'last_modified':
       return formatearFecha(valor);
     case 'single_select':
-      return `<span class="campo-chip">${escapeHtml(normalizarEtiqueta(valor))}</span>`;
+      return `<span class="campo-chip">${escaparHtml(normalizarEtiqueta(valor))}</span>`;
     case 'multiple_select':
       return `<div class="campo-chips">${(valor || [])
-        .map((item) => `<span class="campo-chip">${escapeHtml(normalizarEtiqueta(item))}</span>`)
+        .map((item) => `<span class="campo-chip">${escaparHtml(normalizarEtiqueta(item))}</span>`)
         .join('')}</div>`;
     case 'file':
     case 'image':
@@ -84,17 +84,17 @@ function renderizarValorCampo(valor, campo) {
         .join('')}</div>`;
     case 'link_row':
       return (valor || [])
-        .map((item) => escapeHtml(normalizarEtiqueta(item)))
+        .map((item) => escaparHtml(normalizarEtiqueta(item)))
         .filter(Boolean)
         .join(', ');
     default:
       if (Array.isArray(valor)) {
-        return valor.map((item) => escapeHtml(normalizarEtiqueta(item))).join(', ');
+        return valor.map((item) => escaparHtml(normalizarEtiqueta(item))).join(', ');
       }
       if (typeof valor === 'object') {
-        return escapeHtml(normalizarEtiqueta(valor) || JSON.stringify(valor));
+        return escaparHtml(normalizarEtiqueta(valor) || JSON.stringify(valor));
       }
-      return escapeHtml(valor);
+      return escaparHtml(valor);
   }
 }
 
@@ -110,7 +110,7 @@ function renderizarCamposAutomaticos(registro, campos, camposBase = []) {
       if (!contenido) return '';
       return `
         <div class="campo-item">
-          <div class="campo-etiqueta">${escapeHtml(campo.name)}</div>
+          <div class="campo-etiqueta">${escaparHtml(campo.name)}</div>
           <div class="campo-valor">${contenido}</div>
         </div>
       `;
@@ -156,7 +156,7 @@ export function crearTarjetaProyecto(datos) {
   html += `<h3 class="tarjeta-titulo">${datos.titulo}</h3>`;
 
   if (datos.descripcion) {
-    html += `<div class="tarjeta-descripcion contenido-markdown">${renderMarkdown(datos.descripcion)}</div>`;
+    html += `<div class="tarjeta-descripcion contenido-markdown">${renderizarMarkdown(datos.descripcion)}</div>`;
   }
 
   // Agregar enlace si existe
@@ -198,7 +198,7 @@ export function crearListaArticulos(articulos) {
       html += `<img src="${articulo.imagen}" alt="${articulo.titulo}" class="articulo-imagen">`;
     }
 
-    html += `<div class="articulo-contenido contenido-markdown">${renderMarkdown(articulo.contenido)}</div>`;
+    html += `<div class="articulo-contenido contenido-markdown">${renderizarMarkdown(articulo.contenido)}</div>`;
     html += '</article>';
   });
 
@@ -311,7 +311,7 @@ export function crearSeccionCMS(datos) {
   }
 
   if (datos.contenido) {
-    html += `<div class="seccion-contenido contenido-markdown">${renderMarkdown(datos.contenido)}</div>`;
+    html += `<div class="seccion-contenido contenido-markdown">${renderizarMarkdown(datos.contenido)}</div>`;
   }
 
   div.innerHTML = html;

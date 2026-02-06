@@ -23,9 +23,9 @@ export const SITIO = {
   // Tu nombre o nombre de la organización
   autor: 'Mi Nombre',
 
-  // El URL donde estará tu sitio publicado
-  // Si es en GitHub Pages: https://tuusuario.github.io/nombre-repositorio
-  urlSitio: 'https://ejemplo.com',
+  // El URL se obtiene automáticamente desde vite.config.js
+  // No necesitas cambiar esto aquí
+  urlSitio: __URL_SITIO__ || 'https://ejemplo.com',
 
   // Idioma del sitio (ISO 639-1)
   idioma: 'es',
