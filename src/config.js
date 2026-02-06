@@ -98,7 +98,7 @@ export const TABLA_PROYECTOS = {
 // Esta tabla se usa para títulos, introducción, colección y contacto
 export const DATOS_SITIO = {
   // El ID de la tabla CMS en Baserow
-  id: 828827,
+  id: 829613,
 
   // Nombres exactos de los campos en esa tabla
   campos: {
