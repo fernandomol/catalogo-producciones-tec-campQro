@@ -96,9 +96,9 @@ export const TABLA_PROYECTOS = {
 // =====================================================
 // Crea una tabla en Baserow con 1 sola fila para controlar el sitio
 // Esta tabla se usa para títulos, introducción, colección y contacto
-export const TABLA_SITIO = {
+export const DATOS_SITIO = {
   // El ID de la tabla CMS en Baserow
-  id: 0,
+  id: 828827,
 
   // Nombres exactos de los campos en esa tabla
   campos: {
@@ -109,8 +109,6 @@ export const TABLA_SITIO = {
     introTexto: 'Introducción',
     coleccionTitulo: 'Título colección',
     coleccionTexto: 'Texto colección',
-    contactoTitulo: 'Título contacto',
-    contactoTexto: 'Contacto',
   },
 };
 

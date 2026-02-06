@@ -1,11 +1,12 @@
 import './scss/estilos.scss';
-import { SITIO, TABLA_PROYECTOS, TABLA_SITIO, AVANZADO } from './config.js';
+import { SITIO, TABLA_PROYECTOS, DATOS_SITIO, AVANZADO } from './config.js';
 import { obtenerCamposTabla, obtenerRegistrosTabla } from './baserow.js';
 import { crearSeccionCMS, crearTarjetaProyecto } from './componentes.js';
 
 let cargandoProyectos = false;
 let camposTablaMemo = null;
 let contenedorProyectos = null;
+let sitioInicializado = false;
 
 // =====================================================
 // INICIALIZACIÓN DEL SITIO
@@ -62,25 +63,19 @@ function actualizarMetadatosDelSitio(datosSitio) {
  * Carga los proyectos de Baserow y los muestra en la página
  */
 async function cargarYMostrarProyectos() {
-  if (cargandoProyectos) {
+  if (cargandoProyectos || !contenedorProyectos) {
     return;
   }
 
   cargandoProyectos = true;
 
-  // Mostrar un indicador de que estamos cargando
-  const contenedor = contenedorProyectos || document.querySelector('main') || document.body;
-  if (contenedorProyectos) {
-    contenedorProyectos.innerHTML = '';
-  }
-
-  // Limpiar resultados previos (si existen)
-  contenedor.querySelectorAll('.proyectos-grid, .mensaje-vacio, .cargando').forEach((nodo) => nodo.remove());
+  // Limpiar proyectos previos (pero mantener la estructura de secciones)
+  contenedorProyectos.innerHTML = '';
 
   const mensajeCarga = document.createElement('p');
   mensajeCarga.className = 'cargando';
   mensajeCarga.textContent = '⏳ Cargando proyectos...';
-  contenedor.appendChild(mensajeCarga);
+  contenedorProyectos.appendChild(mensajeCarga);
 
   try {
     const proyectos = AVANZADO.modoEstatico ? await obtenerProyectosEstaticos() : await obtenerProyectosConCache();
@@ -96,13 +91,9 @@ async function cargarYMostrarProyectos() {
       const mensajeVacio = document.createElement('p');
       mensajeVacio.className = 'mensaje-vacio';
       mensajeVacio.textContent = 'No hay proyectos para mostrar aún.';
-      contenedor.appendChild(mensajeVacio);
+      contenedorProyectos.appendChild(mensajeVacio);
       return;
     }
-
-    // Crear un contenedor para las tarjetas
-    const seccionProyectos = contenedorProyectos || document.createElement('div');
-    seccionProyectos.className = 'proyectos-grid';
 
     // Crear una tarjeta para cada proyecto
     proyectos.forEach((proyecto) => {
@@ -121,13 +112,8 @@ async function cargarYMostrarProyectos() {
         ],
       });
 
-      seccionProyectos.appendChild(tarjeta);
+      contenedorProyectos.appendChild(tarjeta);
     });
-
-    // Agregar las tarjetas a la página
-    if (!contenedorProyectos) {
-      contenedor.appendChild(seccionProyectos);
-    }
 
     if (AVANZADO.debug) {
       console.log(`✅ Se mostraron ${proyectos.length} proyectos`);
@@ -138,32 +124,48 @@ async function cargarYMostrarProyectos() {
     const mensajeError = document.createElement('p');
     mensajeError.className = 'mensaje-vacio';
     mensajeError.textContent = 'Ocurrió un error al cargar los proyectos.';
-    contenedor.appendChild(mensajeError);
+    contenedorProyectos.appendChild(mensajeError);
   } finally {
     cargandoProyectos = false;
   }
 }
 
 async function inicializarSitio() {
+  if (sitioInicializado) {
+    return;
+  }
+
   const datosSitio = await cargarDatosSitio();
   construirSecciones(datosSitio);
   actualizarMetadatosDelSitio(datosSitio);
+  sitioInicializado = true;
+
+  // Cargar proyectos después de que todo esté listo
   cargarYMostrarProyectos();
 }
 
 async function cargarDatosSitio() {
-  if (!TABLA_SITIO?.id) {
+  if (!DATOS_SITIO?.id || DATOS_SITIO.id === 0) {
+    console.warn('⚠️ DATOS_SITIO no está configurada. Usando valores por defecto de SITIO.');
+    console.warn('📝 Para usar una tabla CMS en Baserow:');
+    console.warn('   1. Crea una tabla en Baserow con 1 sola fila');
+    console.warn(
+      '   2. Agrega los campos: introTitulo, introTexto, coleccionTitulo, coleccionTexto, contactoTitulo, contactoTexto'
+    );
+    console.warn('   3. Copia el ID de la tabla (de la URL: /table/[ID]/)');
+    console.warn('   4. Pega el ID en config.js: DATOS_SITIO.id = TU_ID');
     return { ...SITIO };
   }
 
-  const registros = await obtenerRegistrosTabla(TABLA_SITIO.id);
+  const registros = await obtenerRegistrosTabla(DATOS_SITIO.id);
   const registro = registros[0];
 
   if (!registro) {
+    console.warn('⚠️ DATOS_SITIO está vacía o no tiene datos. Usando valores por defecto.');
     return { ...SITIO };
   }
 
-  const campos = TABLA_SITIO.campos;
+  const campos = DATOS_SITIO.campos;
   return {
     titulo: registro[campos.titulo] || SITIO.titulo,
     descripcion: registro[campos.descripcion] || SITIO.descripcion,
@@ -172,8 +174,6 @@ async function cargarDatosSitio() {
     introTexto: registro[campos.introTexto] || '',
     coleccionTitulo: registro[campos.coleccionTitulo] || 'Colección',
     coleccionTexto: registro[campos.coleccionTexto] || '',
-    contactoTitulo: registro[campos.contactoTitulo] || 'Contacto',
-    contactoTexto: registro[campos.contactoTexto] || '',
   };
 }
 
@@ -181,6 +181,7 @@ function construirSecciones(datosSitio) {
   const contenedor = document.querySelector('main') || document.body;
   contenedor.innerHTML = '';
 
+  // Crear sección de inicio
   const seccionInicio = crearSeccionCMS({
     id: 'inicio',
     titulo: datosSitio.introTitulo,
@@ -189,6 +190,7 @@ function construirSecciones(datosSitio) {
   });
   contenedor.appendChild(seccionInicio);
 
+  // Crear sección de proyectos con grid vacío
   const seccionColeccion = crearSeccionCMS({
     id: 'proyectos',
     titulo: datosSitio.coleccionTitulo,
@@ -196,18 +198,15 @@ function construirSecciones(datosSitio) {
     clase: 'seccion-proyectos',
   });
 
+  // Crear el grid que se llenará con proyectos
   contenedorProyectos = document.createElement('div');
   contenedorProyectos.className = 'proyectos-grid';
   seccionColeccion.appendChild(contenedorProyectos);
   contenedor.appendChild(seccionColeccion);
 
-  const seccionContacto = crearSeccionCMS({
-    id: 'contacto',
-    titulo: datosSitio.contactoTitulo,
-    contenido: datosSitio.contactoTexto,
-    clase: 'seccion-contacto',
-  });
-  contenedor.appendChild(seccionContacto);
+  if (AVANZADO.debug) {
+    console.log('✅ Secciones construidas: inicio, proyectos');
+  }
 }
 
 function obtenerCacheKey() {

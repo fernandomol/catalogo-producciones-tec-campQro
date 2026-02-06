@@ -1,10 +1,10 @@
 ## ✏️ GUÍA RÁPIDA: QUÉ EDITAR Y DÓNDE
 
-Si tienes poco tiempo, aquí están los **SOLO 3 ARCHIVOS** que necesitas editar para empezar.
+Si tienes poco tiempo, aquí están los **SOLO 3 COSAS** que necesitas hacer para empezar.
 
 ---
 
-## 🎯 PRIORIDAD 1: Configuración (5 minutos)
+## 🎯 PASO 1: Configuración básica (5 minutos)
 
 ### Archivo: `src/config.js`
 
@@ -46,7 +46,25 @@ export const SITIO = {
 
 ---
 
-## 🎨 PRIORIDAD 2: Estilos (10 minutos - opcional)
+## 🎯 PASO 2: Configurar el CMS (contenido del sitio)
+
+### Archivo: [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+
+Para mostrar la introducción, colección y contacto, necesitas crear una tabla especial en Baserow.
+
+**Lee este documento para configurar el CMS:**
+
+[CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+
+Es más detallado que esta guía y explica paso a paso cómo:
+
+1. Crear la tabla en Baserow
+2. Agregar los campos
+3. Configurar el ID en `config.js`
+
+---
+
+## 🎨 PASO 3: Estilos (10 minutos - opcional)
 
 ### Archivo: `src/scss/estilos.scss`
 

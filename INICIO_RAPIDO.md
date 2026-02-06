@@ -115,7 +115,17 @@ export const SITIO = {
 };
 ```
 
-### Paso 9: Probar localmente (5 min)
+### Paso 9: Configurar el CMS (Opcional pero recomendado)
+
+El CMS te permite cambiar el contenido del sitio (introducción, descripción de la colección, contacto) directamente desde Baserow, sin editar código.
+
+**Lee esta guía para configurar el CMS:**
+
+→ [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+
+Toma unos 10 minutos extra, pero luego puedes editar todo desde Baserow.
+
+### Paso 10: Probar localmente (5 min)
 
 1. Abre la terminal en la carpeta del proyecto
 2. Escribe: `npm run dev`
@@ -123,7 +133,12 @@ export const SITIO = {
 
 **¡Deberías ver tus proyectos de Baserow!** 🎉
 
-### Paso 10: Publicar en GitHub Pages (15 min)
+Si no ves la introducción (después de configurar CMS):
+
+- Abre la consola (F12)
+- Si dice que `DATOS_SITIO` no está configurada, revisa [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+
+### Paso 11: Publicar en GitHub Pages (15 min)
 
 #### A. Crear repositorio en GitHub
 
@@ -175,10 +190,12 @@ https://tuusuario.github.io/mi-sitio
 
 Tu sitio está en línea. Cada vez que:
 
-1. Agregues datos en Baserow
-2. Hagas clic en actualizar en el navegador
+1. Agregues datos en Baserow (proyectos o contenido del CMS)
+2. Hagas clic en actualizar en el navegador (o esperes a que se recargue)
 
-Tu sitio mostrará los cambios automáticamente.
+Tu sitio mostrará los cambios automáticamente. **No necesitas hacer build ni subir nada a GitHub manualmente.**
+
+GitHub Actions se encarga de todo automáticamente.
 
 ## Siguiente nivel: Personalización
 
@@ -189,6 +206,7 @@ Una vez funcione, puedes:
 - 📱 Mejorar el diseño en `index.html`
 - 🔌 Agregar más tablas a `src/config.js`
 - 💾 Agregar formulario de contacto
+- 📝 Editar contenido desde el CMS en Baserow
 
 Consulta el README.md para estos pasos.
 
@@ -197,17 +215,24 @@ Consulta el README.md para estos pasos.
 **"No veo mis datos"**
 
 - Abre la consola (F12) en el navegador
-- Ves un error rojo? Significa que:
+- ¿Ves un error rojo? Significa que:
   - Tu token está mal
   - Tu DB_ID o TABLE_ID está mal
   - Los nombres de los campos no coinciden
 
+**"No veo la introducción"**
+
+- Configuraste el CMS en [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)?
+- ¿El `DATOS_SITIO.id` en config.js está en 0? Si es así, es normal. Lee [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+- Abre la consola (F12) para ver mensajes de error
+
 **"Mi sitio no existe en GitHub Pages"**
 
-- ¿Hiciste el último paso (Settings → Pages)?
+- ¿Hiciste el paso E (Settings → Pages)?
 - ¿Subiste los archivos?
 - Espera 5 minutos, a veces tarda
 - Intenta refrescar la página (Ctrl + F5)
+- Ve a la pestaña "Actions" en GitHub para ver el estado del build
 
 **Perdí mi token**
 
